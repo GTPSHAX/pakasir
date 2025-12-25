@@ -1,0 +1,38 @@
+{
+  "name": "pakasir",
+  "version": "1.0.0",
+  "description": "A lightweight and easy-to-use Node.js client module for communicating with the Pakasir payment gateway.",
+  "keywords": [
+    "pakasir",
+    "payment",
+    "gateway",
+    "client"
+  ],
+  "homepage": "https://github.com/gtpshax/pakasir#readme",
+  "bugs": {
+    "url": "https://github.com/gtpshax/pakasir/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gtpshax/pakasir.git"
+  },
+  "license": "MIT",
+  "author": "GTPSHAX",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.0.3",
+    "dotenv": "^17.2.3",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}

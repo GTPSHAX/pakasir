@@ -1,0 +1,1 @@
+export const DEFAULT_BASE_API_URL = "https://app.pakasir.com";
