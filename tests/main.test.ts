@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import Pakasir from "../src";
-import { DEFAULT_BASE_API_URL } from "../src/consts";
+import { DEFAULT_BASE_URL, DEFAULT_BASE_API_PATH } from "../src/consts";
 
 describe("Pakasir Client", () => {
   const projectSlug = process.env.PAKASIR_PROJECT_SLUG;
@@ -15,19 +15,19 @@ describe("Pakasir Client", () => {
     client = new Pakasir(projectSlug, apiKey);
   });
 
-  test("should initialize Pakasir client correctly", () => {
+  test("Should initialize Pakasir client correctly", () => {
     expect(client.projectSlug).toBe(projectSlug);
-    expect((client as any)._apiKey).toBe(apiKey);
-    expect(client.baseURL).toBe(DEFAULT_BASE_API_URL);
+    expect(client.apiKey).toBe(apiKey);
+    expect(client.baseURL).toBe(`${DEFAULT_BASE_URL}/${DEFAULT_BASE_API_PATH}`);
   });
 
-  test("should allow updating baseURL", () => {
+  test("Should allow updating baseURL", () => {
     const newBaseUrl = "https://custom.pakasir.com";
     client.baseURL = newBaseUrl;
     expect(client.baseURL).toBe(newBaseUrl);
   });
 
-  test("should allow updating projectSlug and apiKey", () => {
+  test("Should allow updating projectSlug and apiKey", () => {
     const newProjectSlug = "new-project";
     const newApiKey = "new-api-key";
 
@@ -35,6 +35,6 @@ describe("Pakasir Client", () => {
     client.apiKey = newApiKey;
 
     expect(client.projectSlug).toBe(newProjectSlug);
-    expect((client as any)._apiKey).toBe(newApiKey);
+    expect(client.apiKey).toBe(newApiKey);
   });
 });
