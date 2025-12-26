@@ -1,4 +1,12 @@
 // Base types
+/** Pakasir Configuration */
+export interface PakasirConfig {
+  /** project slug */
+  project: string;
+  /** API key */
+  api_key: string;
+}
+
 /** 
  * Available Payment Methods 
  * @note "ALL" means all available methods. "QRIS" methods also show all available methods, enable qrisOnly in transaction to show only QRIS code.

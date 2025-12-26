@@ -5,6 +5,7 @@ import type {
   APITransactionResponse,
   PaymentMethod,
   CreateTransactionResponse,
+  PakasirConfig,
 } from "../types/pakasir";
 import { makeRequest } from "../utils/request";
 import { createCustomResponse, getActualPaymentMethod } from "../utils/utils";
@@ -15,15 +16,15 @@ import { createCustomResponse, getActualPaymentMethod } from "../utils/utils";
  * @param projectSlug project slug
  * @param apiKey API key
  */
-export default class Pakasir {
+export class Pakasir {
   private baseUrl = `${DEFAULT_BASE_URL}/${DEFAULT_BASE_API_PATH}`;
 
   private _projectSlug: string;
   private _apiKey: string;
 
-  constructor(projectSlug: string, apiKey: string) {
-    this._projectSlug = projectSlug;
-    this._apiKey = apiKey;
+  constructor(config:PakasirConfig) {
+    this._projectSlug = config.project;
+    this._apiKey = config.api_key;
   }
 
   // Setters and Getters
@@ -77,7 +78,7 @@ export default class Pakasir {
    * @see {@link PaymentMethod} for available payment methods.
    * @see {@link CreateTransactionResponse} for the response structure.
    */
-  public async CreateTransaction(
+  public async createTransaction(
     id: string,
     method: PaymentMethod,
     amount: number,
@@ -163,7 +164,7 @@ export default class Pakasir {
    * @throws {Error} If the request fails.
    * @see {@link APITransactionCancelResponse} for the response structure.
    */
-  public async CancelTransaction(id: string, amount: number) {
+  public async cancelTransaction(id: string, amount: number) {
     const url = `${this.baseUrl}/transactioncancel`;
 
     // Prepare request body

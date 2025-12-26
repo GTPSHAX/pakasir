@@ -1,0 +1,14 @@
+{
+  "name": "pakasir-example-esm",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "ES Module example for Pakasir client",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "pakasir": "file:../.."
+  }
+}
