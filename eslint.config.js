@@ -23,6 +23,10 @@ export default [
     rules: {
       ...tseslint.configs.recommended.rules,
       // Add custom rules here
+      'key-spacing': ['error', {
+        singleLine: { beforeColon: false, afterColon: true },
+        multiLine: { beforeColon: false, afterColon: true, align: 'colon' },
+      }],
     },
   },
   {
