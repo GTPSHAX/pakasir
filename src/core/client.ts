@@ -1,12 +1,7 @@
 import { DEFAULT_BASE_URL, DEFAULT_BASE_API_PATH } from "../consts";
-import type {
-  APIBaseRequestBody,
-  APITransactionCancelResponse,
-  APITransactionResponse,
-  PaymentMethod,
-  CreateTransactionResponse,
-  PakasirConfig,
-} from "../types/pakasir";
+import type { APIBaseRequestBody, APITransactionCancelResponse, APITransactionResponse } from "../types/api";
+import type { ClientConfig } from "../types/client";
+import type { PaymentMethod } from "../types/transaction";
 import { makeRequest } from "../utils/request";
 import { createCustomResponse, getActualPaymentMethod } from "../utils/utils";
 
@@ -16,13 +11,13 @@ import { createCustomResponse, getActualPaymentMethod } from "../utils/utils";
  * @param projectSlug project slug
  * @param apiKey API key
  */
-export class Pakasir {
+export class Client {
   private baseUrl = `${DEFAULT_BASE_URL}/${DEFAULT_BASE_API_PATH}`;
 
   private _projectSlug: string;
   private _apiKey: string;
 
-  constructor(config:PakasirConfig) {
+  constructor(config:ClientConfig) {
     this._projectSlug = config.project;
     this._apiKey = config.api_key;
   }
@@ -108,10 +103,10 @@ export class Pakasir {
 
     // Prepare request body
     const body: APIBaseRequestBody = {
-      project: this._projectSlug,
+      project : this._projectSlug,
       order_id: id,
       amount,
-      api_key: this._apiKey,
+      api_key : this._apiKey,
     };
 
     try {
@@ -169,10 +164,10 @@ export class Pakasir {
 
     // Prepare request body
     const body: APIBaseRequestBody = {
-      project: this._projectSlug,
+      project : this._projectSlug,
       order_id: id,
       amount,
-      api_key: this._apiKey,
+      api_key : this._apiKey,
     };
 
     try {

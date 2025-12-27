@@ -1,2 +1,2 @@
-export type * from "./types/pakasir";
-export { Pakasir } from "./core/client";
+export type * from "./types/client";
+export { Client } from "./core/client";
