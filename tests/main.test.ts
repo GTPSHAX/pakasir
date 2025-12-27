@@ -1,18 +1,18 @@
 import 'dotenv/config';
-import { Pakasir } from "../src";
+import { Client } from "../src";
 import { DEFAULT_BASE_URL, DEFAULT_BASE_API_PATH } from "../src/consts";
 
 describe("Pakasir Client", () => {
   const projectSlug = process.env.PAKASIR_PROJECT_SLUG;
   const apiKey = process.env.PAKASIR_API_KEY;
-  let client: Pakasir;
+  let client: Client;
 
   beforeAll(() => {
     if (!projectSlug || !apiKey) {
       throw new Error("PAKASIR_PROJECT_SLUG and PAKASIR_API_KEY must be set in environment variables for tests.");
     }
 
-    client = new Pakasir({
+    client = new Client({
       project: projectSlug,
       api_key: apiKey,
     });

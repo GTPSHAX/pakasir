@@ -1,4 +1,5 @@
-import type { CreateTransactionResponse, PaymentInfo, PaymentMethod, TransactionInfo } from "../types/pakasir";
+import type { SDKTransactionResponse } from "../types/sdk";
+import type { Payment, PaymentMethod, Transaction } from "../types/transaction";
 
 /**
  * Get the actual payment method string for API requests.
@@ -96,14 +97,14 @@ export function createCustomResponse(
   }
 
   return {
-    project: projectSlug,
-    api_key: apiKey,
+    project : projectSlug,
+    api_key : apiKey,
     order_id: id,
     amount,
     
     payment_method: getActualPaymentMethod(method),
 
-    payment: { payment_url: paymentUrl } as PaymentInfo & { payment_url: string },
-    transaction: {} as TransactionInfo,
-  } as CreateTransactionResponse;
+    payment    : { payment_url: paymentUrl } as Payment & { payment_url: string },
+    transaction: {} as Transaction,
+  } as SDKTransactionResponse;
 }

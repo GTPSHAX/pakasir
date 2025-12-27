@@ -1,8 +1,8 @@
 import "dotenv/config";
-import { Pakasir } from "../src";
+import { Client } from "../src";
 
 describe("Transaction Creation", () => {
-  let client: Pakasir;
+  let client: Client;
   let transactionId: string = Date.now().toString();
   let amount: number;
 
@@ -13,7 +13,7 @@ describe("Transaction Creation", () => {
       throw new Error("PAKASIR_PROJECT_SLUG and PAKASIR_API_KEY must be set in environment variables for tests.");
     }
     
-    client = new Pakasir({
+    client = new Client({
       project: projectSlug,
       api_key: apiKey,
     });
