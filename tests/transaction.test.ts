@@ -1,5 +1,5 @@
 import "dotenv/config";
-import Pakasir from "../src";
+import { Pakasir } from "../src";
 
 describe("Transaction Creation", () => {
   let client: Pakasir;
@@ -13,15 +13,17 @@ describe("Transaction Creation", () => {
       throw new Error("PAKASIR_PROJECT_SLUG and PAKASIR_API_KEY must be set in environment variables for tests.");
     }
     
-    client = new Pakasir(projectSlug, apiKey);
+    client = new Pakasir({
+      project: projectSlug,
+      api_key: apiKey,
+    });
     amount = 10000;
   });
 
   test("Should create a ALL method successfully", async () => {
     const paymentMethod = "ALL";
 
-    const response = await client.CreateTransaction(transactionId, paymentMethod, amount);
-    console.log("Transaction Creation Response:", JSON.stringify(response, null, 2));
+    const response = await client.createTransaction(transactionId, paymentMethod, amount);
 
     expect(response).toHaveProperty("payment");
     expect(response.amount).toBe(amount);
@@ -29,8 +31,7 @@ describe("Transaction Creation", () => {
   });
 
   test("Should cancel the ALL method successfully", async () => {
-    const response = await client.CancelTransaction(transactionId, amount);
-    console.log("Transaction Cancellation Response:", JSON.stringify(response, null, 2));
+    const response = await client.cancelTransaction(transactionId, amount);
 
     expect(response).toHaveProperty("success");
   });
@@ -39,8 +40,7 @@ describe("Transaction Creation", () => {
     transactionId = (Date.now() + 1).toString(); // Ensure unique order_id
     const paymentMethod = "QRIS";
 
-    const response = await client.CreateTransaction(transactionId, paymentMethod, amount, true, "https://example.com/redirect");
-    console.log("Transaction Creation Response:", JSON.stringify(response, null, 2));
+    const response = await client.createTransaction(transactionId, paymentMethod, amount, true, "https://example.com/redirect");
 
     expect(response).toHaveProperty("payment");
     expect(response.order_id).toBe(transactionId);
@@ -48,8 +48,7 @@ describe("Transaction Creation", () => {
   });
 
   test("Should cancel the QRIS method successfully", async () => {
-    const response = await client.CancelTransaction(transactionId, amount);
-    console.log("Transaction Cancellation Response:", JSON.stringify(response, null, 2));
+    const response = await client.cancelTransaction(transactionId, amount);
 
     expect(response).toHaveProperty("success");
   });
