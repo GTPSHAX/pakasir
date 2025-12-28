@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "description": "ES Module example for Pakasir client",
-  "main": "index.js",
+  "main": "client.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node client.js"
   },
   "dependencies": {
     "pakasir": "file:../.."
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3"
   }
 }
