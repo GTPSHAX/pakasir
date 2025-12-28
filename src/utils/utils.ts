@@ -1,10 +1,18 @@
-import type { SDKTransactionResponse } from "../types/sdk";
+import type { SDKCreateTransactionResponse } from "../types/sdk";
 import type { Payment, PaymentMethod, Transaction } from "../types/transaction";
 
 /**
- * Get the actual payment method string for API requests.
- * @param method The payment method type.
- * @returns {string} The actual payment method string.
+ * Converts a PaymentMethod enum to the API's expected string format.
+ *
+ * @param method - The payment method type
+ *
+ * @returns The lowercase, underscore-separated payment method string
+ *
+ * @example
+ * ```ts
+ * getActualPaymentMethod('BNI_VA') // returns 'bni_va'
+ * getActualPaymentMethod('QRIS')   // returns 'qris'
+ * ```
  */
 export function getActualPaymentMethod(method: PaymentMethod): string {
   switch (method) {
@@ -35,47 +43,42 @@ export function getActualPaymentMethod(method: PaymentMethod): string {
 
 /**
  * Create a custom transaction response object.
- * 
- * @param id The order ID.
+ *
+ * @param orderId The order ID.
  * @param method The payment method.
  * @param amount The transaction amount.
  * @param projectSlug The project slug.
- * @param apiKey The API key.
  * @param onlyQris Whether to use only QRIS payment method.
  * @param redirectUrl Optional redirect URL after payment.
- * @returns {CreateTransactionResponse} The custom transaction response object.
- * 
+ * @returns {SDKCreateTransactionResponse} The custom transaction response object.
+ *
  * @throws {Error} If validation fails.
- * 
+ *
  * @see {@link PaymentMethod} for available payment methods.
- * @see {@link CreateTransactionResponse} for the response structure.
+ * @see {@link SDKCreateTransactionResponse} for the response structure.
  */
 export function createCustomResponse(
-  id: string,
+  orderId: string,
   method: PaymentMethod,
   amount: number,
   projectSlug: string,
-  apiKey: string,
   onlyQris: boolean = false,
   redirectUrl?: string
 ) {
   // Basic validation
-  id = id.trim();
+  orderId = orderId.trim();
 
   // Validate inputs
-  if (!projectSlug || !apiKey) {
-    throw new Error("Project slug and API key must be provided");
-  }
   if (!method) {
     throw new Error("Payment method must be provided");
   }
-  if (id.length < 5) {
+  if (orderId.length < 5) {
     throw new Error("Order ID must be at least 5 characters long");
   }
   if (amount < 500) {
     throw new Error("Amount must be at least 500");
   }
-  if (amount < 10000 && method === 'PAYPAL') {
+  if (amount < 10000 && method === "PAYPAL") {
     throw new Error("Amount must be at least 10000 for PayPal payments");
   }
 
@@ -86,7 +89,7 @@ export function createCustomResponse(
   // Determine payment method prefix
   if (method === "PAYPAL") prefix = "paypal";
 
-  paymentUrl = `${prefix}/${projectSlug}/${amount}?order_id=${id}`;
+  paymentUrl = `${prefix}/${projectSlug}/${amount}?order_id=${orderId}`;
 
   // Append redirect URL and onlyQris if provided
   if (redirectUrl) {
@@ -97,14 +100,13 @@ export function createCustomResponse(
   }
 
   return {
-    project : projectSlug,
-    api_key : apiKey,
-    order_id: id,
+    project: projectSlug,
+    order_id: orderId,
     amount,
-    
+
     payment_method: getActualPaymentMethod(method),
 
-    payment    : { payment_url: paymentUrl } as Payment & { payment_url: string },
+    payment: { payment_url: paymentUrl } as Payment & { payment_url: string },
     transaction: {} as Transaction,
-  } as SDKTransactionResponse;
+  } as SDKCreateTransactionResponse;
 }
