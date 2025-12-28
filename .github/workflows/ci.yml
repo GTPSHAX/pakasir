@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: {}
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint --if-present
+
+  build-and-test:
+    name: Build & Test
+    needs: lint
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x, 24.x]
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (TypeScript)
+        run: npm run build --if-present
+
+      - name: Verify build output
+        run: |
+          test -f dist/index.js || exit 1
+          test -f dist/index.cjs || exit 1
+          test -f dist/index.d.ts || exit 1
+          echo "✓ All build artifacts present"
+
+      - name: Run tests
+        env:
+          CI: true
+          PAKASIR_PROJECT_SLUG: ${{ secrets.PAKASIR_PROJECT_SLUG }}
+          PAKASIR_API_KEY: ${{ secrets.PAKASIR_API_KEY }}
+        run: npm test --silent
+

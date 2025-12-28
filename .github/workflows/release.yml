@@ -1,0 +1,40 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - run: npm ci
+      - run: npm run build
+      - run: npm test
+        env:
+          CI: true
+          PAKASIR_PROJECT_SLUG: ${{ secrets.PAKASIR_PROJECT_SLUG }}
+          PAKASIR_API_KEY: ${{ secrets.PAKASIR_API_KEY }}
+      
+      - name: Verify build
+        run: |
+          test -f dist/index.js || exit 1
+          test -f dist/index.cjs || exit 1
+          test -f dist/index.d.ts || exit 1
+          echo "✓ Build verified"
+      
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
