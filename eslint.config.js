@@ -15,6 +15,7 @@ export default [
       globals: {
         fetch: 'readonly',
         RequestInit: 'readonly',
+        URLSearchParams: 'readonly',
       },
     },
     plugins: {
@@ -25,11 +26,11 @@ export default [
       // Add custom rules here
       'key-spacing': ['error', {
         singleLine: { beforeColon: false, afterColon: true },
-        multiLine: { beforeColon: false, afterColon: true, align: 'colon' },
+        multiLine: { beforeColon: false, afterColon: true },
       }],
     },
   },
   {
-    ignores: ['dist/', 'tests/', 'node_modules/'],
+    ignores: ['dist/', 'tests/', 'examples/', 'node_modules/'],
   },
 ];
