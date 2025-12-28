@@ -1,17 +1,26 @@
 /**
- * Makes an HTTP request to the specified URL with the given method and body.
+ * Makes an HTTP request using the Fetch API.
  * 
- * @param url The URL to which the request is sent.
- * @param method The HTTP method to use for the request (GET, POST, PUT, DELETE).
- * @param body The body of the request, if applicable.
+ * @template T - The expected response data type
+ * @template B - The request body type
  * 
- * @returns {Promise<T>} Promise<T = any> The response data.
- * @throws {Error} Error If the request fails or encounters an error.
+ * @param url - The URL to send the request to
+ * @param method - HTTP method to use
+ * @param [body] - Optional request body (will be JSON stringified)
+ * 
+ * @returns Promise resolving to the parsed JSON response
+ * 
+ * @throws {Error} If the request fails or returns a non-OK status
+ * 
+ * @example
+ * ```ts
+ * const data = await makeRequest<UserData>('/api/user', 'GET');
+ * ```
  */
-export function makeRequest<T = any>( // eslint-disable-line @typescript-eslint/no-explicit-any,
+export function makeRequest<T = any, B = unknown>( // eslint-disable-line @typescript-eslint/no-explicit-any,
   url: string,
   method: "GET" | "POST" | "PUT" | "DELETE",
-  body?: any // eslint-disable-line @typescript-eslint/no-explicit-any,
+  body?: B
 ) {
   const options: RequestInit = {
     method,
@@ -24,13 +33,14 @@ export function makeRequest<T = any>( // eslint-disable-line @typescript-eslint/
     options.body = JSON.stringify(body);
   }
 
-  return fetch(url, options).then((response) => {
+  return fetch(url, options).then(async (response) => {
     if (!response.ok) {
+      const errorBody = await response.text();
       throw new Error(
         `Request failed with status ${response.status}: ${
           response.statusText
         }, URL: ${url}, Method: ${method}, Body: ${
-          response.body ? JSON.stringify(response.body) : "N/A"
+          errorBody || "N/A"
         }`
       );
     }
