@@ -1,5 +1,5 @@
 import type { ClientConfig } from "./client";
-import type { BaseTransaction, Payment, TransactionMetadata } from "./transaction";
+import type { BaseTransaction, Transaction, Payment, TransactionMetadata } from "./transaction";
 
 /**
  * SDK custom response for transaction operations.
@@ -15,7 +15,7 @@ import type { BaseTransaction, Payment, TransactionMetadata } from "./transactio
  * @see {@link Payment} for payment breakdown fields.
  * @see {@link Transaction} for transaction state fields.
  */
-export interface SDKTransactionResponse extends ClientConfig, BaseTransaction, TransactionMetadata {
+export interface SDKCreateTransactionResponse extends ClientConfig, BaseTransaction, TransactionMetadata {
   /** 
    * Payment information with payment URL.
    * 
