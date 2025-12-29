@@ -8,13 +8,13 @@
     "gateway",
     "client"
   ],
-  "homepage": "https://github.com/gtpshax/pakasir#readme",
+  "homepage": "https://github.com/GTPSHAX/pakasir#readme",
   "bugs": {
-    "url": "https://github.com/gtpshax/pakasir/issues"
+    "url": "https://github.com/GTPSHAX/pakasir/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/gtpshax/pakasir"
+    "url": "git+https://github.com/GTPSHAX/pakasir.git"
   },
   "license": "MIT",
   "author": "gtpshax",
