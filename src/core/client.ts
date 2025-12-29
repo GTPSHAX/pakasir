@@ -229,7 +229,7 @@ export class Client {
     };
 
     try {
-      const response = await makeRequest<APITransactionResponse>(
+      const response = await makeRequest<APITransactionResponse, APIBaseRequestBody>(
         url,
         "POST",
         body
@@ -294,7 +294,7 @@ export class Client {
     };
 
     try {
-      const response = await makeRequest<APITransactionCancelResponse>(
+      const response = await makeRequest<APITransactionCancelResponse, APIBaseRequestBody>(
         url,
         "POST",
         body
@@ -347,7 +347,7 @@ export class Client {
     };
 
     try {
-      const response = await makeRequest<APITransactionSimulationResponse>(
+      const response = await makeRequest<APITransactionSimulationResponse, APIBaseRequestBody>(
         url,
         "POST",
         body
@@ -393,7 +393,7 @@ export class Client {
     const url = `${this._baseUrl}/transactiondetail?${params.toString()}`;
 
     try {
-      const response = await makeRequest<APITransactionDetailResponse>(
+      const response = await makeRequest<APITransactionDetailResponse, APIBaseRequestBody>(
         url,
         "GET"
       );
