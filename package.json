@@ -17,7 +17,7 @@
     "url": "git+https://github.com/GTPSHAX/pakasir.git"
   },
   "license": "MIT",
-  "author": "gtpshax",
+  "author": "GTPSHAX",
   "type": "module",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
