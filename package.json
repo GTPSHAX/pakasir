@@ -1,6 +1,6 @@
 {
   "name": "pakasir",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight and easy-to-use unofficial Node.js client module for communicating with the Pakasir payment gateway.",
   "keywords": [
     "pakasir",
