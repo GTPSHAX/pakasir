@@ -45,7 +45,7 @@ const PAKASIR_API_KEY = process.env.PAKASIR_API_KEY || 'your-api-key';
 
     // 3. Simulate payment (for testing)
     console.log('\n=== Simulating Payment ===');
-    const simulationResult = await pakasir.paymentSimulation(orderId, amount);
+    const simulationResult = await pakasir.simulatePayment(orderId, amount);
     
     console.log('✓ Payment simulated:', simulationResult.success);
 
