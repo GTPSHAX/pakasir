@@ -1,6 +1,6 @@
 # Pakasir
 
-<img src="images/pakasir.png" alt="Logo Pakasir" width="100" alight="left">
+<img src="images/pakasir.png" alt="Logo Pakasir" width="100" alight="right">
 
 Modul klien Node.js yang ringan dan mudah digunakan untuk berkomunikasi dengan payment gateway [Pakasir](https://pakasir.com).
 
